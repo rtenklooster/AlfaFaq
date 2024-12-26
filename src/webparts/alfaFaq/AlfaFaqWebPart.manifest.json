@@ -1,10 +1,10 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-  "id": "061da2cd-f680-4da5-ab30-40a8ba1aafd8",
+  "id": "071da2cd-f680-4da5-ab30-40a8ba1aafd8",
   "alias": "AlfaFaqWebPart",
   "componentType": "WebPart",
 
-  "version": "*",
+  "version": "3.0.1",
   "manifestVersion": 2,
 
  "requiresCustomScript": false,

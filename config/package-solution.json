@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
     "name": "Alfa-Faq-WebPart",
-    "id": "bf6fa974-fd40-45a3-80e9-f826abe025b9",
-    "version": "2.0.0.0",
+    "id": "bf7fa974-fd40-45a3-80e9-f826abe025b9",
+    "version": "2.1.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "developer": {
@@ -28,10 +28,10 @@
       {
         "title": "AlfaFaqWebPart Feature",
         "description": "The feature that activates AlfaFaqWebPart from the solution.",
-        "id": "061da2cd-f680-4da5-ab30-40a8ba1aafd8",
+        "id": "071da2cd-f680-4da5-ab30-40a8ba1aafd8",
         "version": "2.0.0.0",
         "componentIds": [
-          "061da2cd-f680-4da5-ab30-40a8ba1aafd8"
+          "071da2cd-f680-4da5-ab30-40a8ba1aafd8"
         ]
       }
     ]
