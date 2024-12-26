@@ -4,14 +4,15 @@ logs
 npm-debug.log*
 
 # Dependency directories
-node_modules
+node_modules/
+.env
 
 # Build generated files
-dist
-lib
-release
+dist/
+lib/
+release/
 solution
-temp
+temp/
 *.sppkg
 .heft
 
