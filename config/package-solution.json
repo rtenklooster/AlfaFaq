@@ -3,7 +3,7 @@
   "solution": {
     "name": "Alfa-Faq-WebPart",
     "id": "bf7fa974-fd40-45a3-80e9-f826abe025b9",
-    "version": "2.1.0.0",
+    "version": "2.2.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "developer": {

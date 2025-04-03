@@ -113,7 +113,7 @@ export default class AlfaFaqWebPart extends BaseClientSideWebPart<
         const spListColumns = this._sp.web.lists
           .getById(this.properties.listId)
           .fields.filter(
-            "ReadOnlyField eq false and Hidden eq false and TypeAsString eq 'Choice'"
+            "ReadOnlyField eq false and Hidden eq false and (TypeAsString eq 'Choice' or TypeAsString eq 'MultiChoice')"
           )
           ();
         spListColumns.then((columnResult) => {
@@ -121,7 +121,7 @@ export default class AlfaFaqWebPart extends BaseClientSideWebPart<
           columnResult.forEach((column) => {
             listColumns.push({
               key: column.Title,
-              text: column.Title,
+              text: column.Title + (column.TypeAsString === 'MultiChoice' ? ' (Multi-select)' : ''),
             });
           });
           resolve(listColumns);
@@ -131,6 +131,7 @@ export default class AlfaFaqWebPart extends BaseClientSideWebPart<
       }
     );
   }
+
   private loadAllColumns(): Promise<IPropertyPaneDropdownOption[]> {
     return new Promise<IPropertyPaneDropdownOption[]>(
       (

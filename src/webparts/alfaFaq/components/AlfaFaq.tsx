@@ -22,7 +22,7 @@ interface IAccordionItem {
   Id: string;
   Title: string;
   Content: string;
-  Category: string;
+  Category: string | string[];
   helpful?: boolean;
 }
 
@@ -160,6 +160,50 @@ export default class AlfaFaq extends React.Component<
     }
   }
 
+  /**
+   * Controleert of een item in een bepaalde categorie valt
+   * Werkt zowel met single-select als multi-select velden
+   */
+  private isItemInCategory(item: IAccordionItem, category: string): boolean {
+    if (category === "Alle") return true;
+    
+    // Debug informatie printen om te zien wat er in het item zit
+    console.log("Item kategorie check:", {
+      item: item,
+      category: category,
+      columnTitle: this.props.columnTitle,
+      itemKeys: Object.keys(item),
+      itemValue: item[this.props.columnTitle],
+      hasMultiChoice: item["Meerderekeuzea"] !== undefined
+    });
+    
+    // Probeer eerst de geconfigureerde kolom
+    let itemCategory = item[this.props.columnTitle];
+    
+    // Als dat niet werkt, probeer dan ook "Meerderekeuzea" als fallback voor multi-select
+    if ((itemCategory === null || itemCategory === undefined) && item["Meerderekeuzea"] !== undefined) {
+      console.log("Fallback naar Meerderekeuzea veld");
+      itemCategory = item["Meerderekeuzea"];
+    }
+    
+    // Als het nog steeds null of undefined is
+    if (itemCategory === null || itemCategory === undefined) {
+      console.log("Geen categorie gevonden voor dit item");
+      return false;
+    }
+    
+    // Als het een array is (multi-select)
+    if (Array.isArray(itemCategory)) {
+      const result = itemCategory.some(value => value === category);
+      console.log(`Multi-select check: ${itemCategory.join(',')} bevat ${category}? ${result}`);
+      return result;
+    }
+    
+    // Als het een string is (single-select)
+    console.log(`Single-select check: ${itemCategory} == ${category}? ${itemCategory === category}`);
+    return itemCategory === category;
+  }
+
   public componentDidUpdate(prevProps: IAlfaFaqProps): void {
     if (prevProps.listId !== this.props.listId) {
       this.getListItems();
@@ -215,7 +259,7 @@ export default class AlfaFaq extends React.Component<
                     }} 
                   >
                     {this.state.items
-                      .filter(item => (category === "Alle" || item[this.props.columnTitle] === category) && 
+                      .filter(item => this.isItemInCategory(item, category) && 
                                       (!searchText || item[this.props.accordianTitleColumn].toLowerCase().includes(searchText.toLowerCase()) || 
                                       item[this.props.accordianContentColumn].toLowerCase().includes(searchText.toLowerCase())))
                       .map((item: IAccordionItem) => (
@@ -233,7 +277,7 @@ export default class AlfaFaq extends React.Component<
                           </AccordionItemPanel>
                         </AccordionItem>
                       ))}
-                      {this.state.items.filter(item => (category === "Alle" || item[this.props.columnTitle] === category) && 
+                      {this.state.items.filter(item => this.isItemInCategory(item, category) && 
                                       (!searchText || item[this.props.accordianTitleColumn].toLowerCase().includes(searchText.toLowerCase()) || 
                                       item[this.props.accordianContentColumn].toLowerCase().includes(searchText.toLowerCase()))).length === 0 && (
                       <p>Deze categorie bevat geen vragen, of je zoekopdracht heeft geen resultaten.</p>
